@@ -54,7 +54,18 @@ namespace lab34EVM
                 string first = a.num;
                 string second = b.num;
 
-                int maxlen = first.Length > second.Length ? first.Length : second.Length;
+                if (first.Length < second.Length)
+                {
+                    first = b.num;
+                    second = a.num;
+                }
+
+                string temp = "";
+                for(int i = 0; i < first.Length - second.Length; i++)
+                {
+                    temp += "0";
+                }
+                second = String.Concat(temp, second);
 
                 int curSS = 2;
 
@@ -121,8 +132,12 @@ namespace lab34EVM
                         }
                     }
                 }
+                if (overflow)
+                {
+                    res += '1';
+                }
 
-                return new NumSS(res, curSS);
+                return new NumSS(new string(res.Reverse().ToArray()), curSS);
             }
 
             public bool CheckInvalid()
